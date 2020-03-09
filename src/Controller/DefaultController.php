@@ -5,45 +5,29 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Services\GiftService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends AbstractController
 {
+
+
     /**
-     * @Route("/", name="default")
+     * @Route("/home ", name="default", name="home")
      */
-    public function index(GiftService $gifts)
+    public function index( Request $request)
     {
-        /*$entityManager=$this->getDoctrine()->getManager();
-        $user = new User;
-        $user->setName("Adam");
-        $user2 = new User;
-        $user2->setName("Krzyskiek");
-        $user3 = new User;
-        $user3->setName("Jan");
-        $user4 = new User;
-        $user4->setName("Alojzy");
-
-        $entityManager->persist($user);
-        $entityManager->persist($user2);
-        $entityManager->persist($user3);
-        $entityManager->persist($user4);
-        $entityManager->flush();*/
-
-        $users=$this->getDoctrine()->getRepository(User::class)->findAll();
-
-        $this->addFlash(
-            'notice',
-            'Your changes were saved'
-        );
-
-
-
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'users'=>$users,
-                'random_gift'=>$gifts->gifts
         ]);
     }
+
+
+
 }

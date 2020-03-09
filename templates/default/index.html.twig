@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello DefaultController!{% endblock %}
-
+{% set string = "some string \n from \n database" %}
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
@@ -9,27 +9,49 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ controller_name|upper }}! ✅</h1>
+
+    {% set users = [{name:'Jack'},{name:'John'},{name:'Adam'}] %}
 
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/symfony_u/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
         <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/symfony_u/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
-    
-    <ul>
-        {% for user in users %}
-        <li>{{ user.name}} - you won ({{ random_gift[1] }})</li>
+
+        {% for user in users
+             %}
+            {% if user.name == 'Adam' %}
+            <p>{{ user.name }}</p>
+                {% else %}
+                Nie odnaleziono
+            {% endif %}
         {% endfor %}
-        
-    </ul>
+        {{ include('usun.html.twig', { 'users': users}) }}
 
-    {% for message in app.flashes('notice') %}
-        <div class="flash-notice">
-            {{ message }}
+    {{ path('home') }}<br>
+    {{ url('home') }}<br>
+    {{ asset('css/my.css') }}<br>
+    {{ absolute_url('css/my.css') }}<br>
 
+
+    {% for i in 1..10 %}
+        <div class="{{ cycle(['even', 'odd'], i ) }}">
+            {{ i }}
         </div>
     {% endfor %}
-    
+
+    <p>asdsa dasd sa ddsaasdadsdasasd {{ ga_code }}</p>
+
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+
+    var route = "{{ string|escape('js') }}";
+    alert(route);
+
+</script>
 {% endblock %}
